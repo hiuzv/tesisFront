@@ -74,3 +74,40 @@ body {
     color: gray;
   }
   
+  .code-block {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .code-block button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #000066;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .code-block button:hover {
+    background-color: #333399;
+  }
+  
+  .feedback-buttons {
+    margin-top: 10px;
+  }
+  
+  .feedback-buttons button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 10px;
+  }
+  
+  .feedback-buttons button:hover {
+    transform: scale(1.1);
+  }
+  

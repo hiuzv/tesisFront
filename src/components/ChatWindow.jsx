@@ -41,6 +41,24 @@ const ChatWindow = () => {
     }
   };
 
+  const handleCopyCode = (code) => {
+    navigator.clipboard.writeText(code).then(() => {
+      alert('Código copiado al portapapeles');
+    }).catch(() => {
+      alert('Error al copiar el código');
+    });
+  };
+
+  const handleFeedback = (feedback) => {
+    axios.post('https://web-production-67b6d.up.railway.app/feedback', { feedback })
+      .then(() => {
+        alert('Gracias por tu feedback');
+      })
+      .catch(() => {
+        alert('Error al enviar el feedback');
+      });
+  };
+
   return (
     <div className="chat-window">
       <div className="chat-header">Chat Bot Educativo</div>
@@ -51,7 +69,12 @@ const ChatWindow = () => {
               key={index}
               className="bot-message message"
               dangerouslySetInnerHTML={{ __html: message.text }}
-            ></div>
+            >
+            <div className="feedback-buttons">
+              <button onClick={() => handleFeedback('like')}>👍 Like</button>
+              <button onClick={() => handleFeedback('dislike')}>👎 Dislike</button>
+            </div>
+            </div>
           ) : (
             <p key={index} className="user-message message">
               {message.text}
