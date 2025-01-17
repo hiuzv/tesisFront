@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Message from './Message';
 import FeedbackButtons from './FeedbackButtons';
 import Loader from './Loader';
@@ -10,6 +10,14 @@ const ChatWindow = () => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [userName, setUserName] = useState('Usuario Anónimo');
+
+  useEffect(() => {
+    // Extraer el parámetro "nombre_usuario" de la URL
+    const params = new URLSearchParams(window.location.search);
+    const nombreUsuario = params.get('nombre_usuario') || 'Usuario Anónimo';
+    setUserName(decodeURIComponent(nombreUsuario)); // Decodificar espacios u otros caracteres
+  }, []);
 
   const sendMessage = async () => {
     if (input.trim() === '') return;
@@ -22,6 +30,7 @@ const ChatWindow = () => {
     try {
       const response = await axios.post('https://web-production-67b6d.up.railway.app/chat', {
         prompt: input,
+        nombre_usuario: userName,
       });
       const botMessage = { role: 'bot', text: response.data.response, feedbackGiven: false };
       setMessages([...messages, newMessage, botMessage]);
@@ -48,46 +57,6 @@ const ChatWindow = () => {
       alert('Error al copiar el código');
     });
   };
-
-  const renderMessage = (message, index) => {
-    if (message.role === 'bot') {
-      // Dividir el contenido del mensaje en bloques de texto y código
-      const codeRegex = /<pre><code>([\s\S]*?)<\/code><\/pre>/g;
-      const parts = message.text.split(codeRegex);
-  
-      return (
-        <div key={index} className="bot-message message">
-          {parts.map((part, i) =>
-            i % 2 === 0 ? (
-              // Renderizar texto normal
-              <div key={i} dangerouslySetInnerHTML={{ __html: part }}></div>
-            ) : (
-              // Renderizar bloque de código con botón de copiar
-              <div key={i} className="code-block">
-                <pre><code>{part}</code></pre>
-                <button className="copy-button" onClick={() => handleCopyCode(part)}>Copiar</button>
-              </div>
-            )
-          )}
-          {/* Botones de feedback */}
-          {!message.feedbackGiven && index !== 0 && (
-            <div className="feedback-buttons">
-              <button onClick={() => handleFeedback(index, 'like')}>👍 Like</button>
-              <button onClick={() => handleFeedback(index, 'dislike')}>👎 Dislike</button>
-            </div>
-          )}
-        </div>
-      );
-    }
-  
-    // Renderizar mensajes del usuario
-    return (
-      <p key={index} className="user-message message">
-        {message.text}
-      </p>
-    );
-  };
-  
 
   const handleFeedback = (index, feedback) => {
     const updatedMessages = [...messages];
