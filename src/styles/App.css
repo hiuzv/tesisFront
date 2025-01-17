@@ -6,7 +6,7 @@ body {
   }
   
   .chat-window {
-    max-width: 800px; /* Limitar el ancho del chat */
+    max-width: 1500px; /* Limitar el ancho del chat */
     margin: 0 auto; /* Centrar horizontalmente */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background-color: #fff;
@@ -23,12 +23,12 @@ body {
     padding: 10px;
     text-align: center;
     border-radius: 8px 8px 0 0;
-    max-height: 400px; /* Limitar la altura del chat */
+    max-height: 800px; /* Limitar la altura del chat */
     overflow-y: auto; /* Habilitar desplazamiento vertical */
   }
   
   .chat-log {
-    max-height: 400px; /* Limitar la altura */
+    max-height: 800px; /* Limitar la altura */
     overflow-y: auto; /* Habilitar desplazamiento vertical */
     padding: 15px;
   }
