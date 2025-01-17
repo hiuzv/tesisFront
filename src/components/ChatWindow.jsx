@@ -46,9 +46,18 @@ const ChatWindow = () => {
       <div className="chat-header">Chat Bot Educativo</div>
       <div className="chat-log">
         {messages.map((message, index) => (
-          <Message key={index} role={message.role} text={message.text} />
+          message.role === 'bot' ? (
+            <div
+              key={index}
+              className="bot-message message"
+              dangerouslySetInnerHTML={{ __html: message.text }}
+            ></div>
+          ) : (
+            <p key={index} className="user-message message">
+              {message.text}
+            </p>
+          )
         ))}
-        {isLoading && <Loader />}
       </div>
       <div className="chat-footer">
         <input
