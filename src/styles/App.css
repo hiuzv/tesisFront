@@ -141,3 +141,26 @@ body {
     transform: scale(1.1);
   }
   
+  h3 {
+    font-size: 18px;
+    color: #333;
+    margin: 15px 0 10px;
+  }
+  
+  ol {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+  
+  ol li {
+    margin-bottom: 5px;
+    line-height: 1.5;
+  }
+  
+  b {
+    font-weight: bold;
+  }
+  
+  i {
+    font-style: italic;
+  }
