@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const ChatWindow = () => {
   const [messages, setMessages] = useState([
-    { role: 'bot', text: 'Bienvenido al Chat Bot Educativo' },
+    { role: 'bot', text: 'Bienvenido al Chat Bot Educativo', feedbackGiven: true },
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +14,7 @@ const ChatWindow = () => {
   const sendMessage = async () => {
     if (input.trim() === '') return;
 
-    const newMessage = { role: 'user', text: input };
+    const newMessage = { role: 'user', text: input, feedbackGiven: false };
     setMessages([...messages, newMessage]);
     setInput('');
     setIsLoading(true);
@@ -23,10 +23,10 @@ const ChatWindow = () => {
       const response = await axios.post('https://web-production-67b6d.up.railway.app/chat', {
         prompt: input,
       });
-      const botMessage = { role: 'bot', text: response.data.response };
+      const botMessage = { role: 'bot', text: response.data.response, feedbackGiven: false };
       setMessages([...messages, newMessage, botMessage]);
     } catch (error) {
-      const errorMessage = { role: 'bot', text: 'Error en la conexión.' };
+      const errorMessage = { role: 'bot', text: 'Error en la conexión.', feedbackGiven: true };
       setMessages([...messages, newMessage, errorMessage]);
     } finally {
       setIsLoading(false);
@@ -49,7 +49,12 @@ const ChatWindow = () => {
     });
   };
 
-  const handleFeedback = (feedback) => {
+  const handleFeedback = (index, feedback) => {
+    const updatedMessages = [...messages];
+    updatedMessages[index].feedbackGiven = true; // Bloquear feedback para este mensaje
+    setMessages(updatedMessages);
+
+    // Enviar el feedback al servidor
     axios.post('https://web-production-67b6d.up.railway.app/feedback', { feedback })
       .then(() => {
         alert('Gracias por tu feedback');
@@ -64,19 +69,22 @@ const ChatWindow = () => {
       <div className="chat-header">Chat Bot Educativo</div>
       <div className="chat-log">
         {messages.map((message, index) => (
-          message.role === 'bot' ? (
-            <div key={index} className="bot-message message">
+          <div key={index} className={`message ${message.role === 'user' ? 'user-message' : 'bot-message'}`}>
+            {/* Renderizar contenido del mensaje */}
+            {message.role === 'bot' ? (
               <div dangerouslySetInnerHTML={{ __html: message.text }}></div>
+            ) : (
+              <p>{message.text}</p>
+            )}
+
+            {/* Mostrar botones de Like/Dislike solo si no se ha dado feedback y no es el mensaje de bienvenida */}
+            {message.role === 'bot' && !message.feedbackGiven && index !== 0 && (
               <div className="feedback-buttons">
-                <button onClick={() => handleFeedback('like')}>👍 Like</button>
-                <button onClick={() => handleFeedback('dislike')}>👎 Dislike</button>
+                <button onClick={() => handleFeedback(index, 'like')}>👍 Like</button>
+                <button onClick={() => handleFeedback(index, 'dislike')}>👎 Dislike</button>
               </div>
-            </div>
-          ) : (
-            <p key={index} className="user-message message">
-              {message.text}
-            </p>
-          )
+            )}
+          </div>
         ))}
         {isLoading && <Loader />}
       </div>
