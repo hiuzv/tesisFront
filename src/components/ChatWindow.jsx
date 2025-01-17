@@ -63,8 +63,10 @@ const ChatWindow = () => {
     updatedMessages[index].feedbackGiven = true; // Bloquear feedback para este mensaje
     setMessages(updatedMessages);
 
+    const messageId = updatedMessages[index].message_id;
+
     // Enviar el feedback al servidor
-    axios.post('https://web-production-67b6d.up.railway.app/feedback', { feedback })
+    axios.post('https://web-production-67b6d.up.railway.app/feedback', { feedback, message_id: messageId, })
       .then(() => {
         alert('Gracias por tu feedback');
       })
@@ -72,7 +74,7 @@ const ChatWindow = () => {
         alert('Error al enviar el feedback');
       });
   };
-
+  
   return (
     <div className="chat-window">
       <div className="chat-header">Chat Bot Educativo</div>
