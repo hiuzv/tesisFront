@@ -65,15 +65,12 @@ const ChatWindow = () => {
       <div className="chat-log">
         {messages.map((message, index) => (
           message.role === 'bot' ? (
-            <div
-              key={index}
-              className="bot-message message"
-              dangerouslySetInnerHTML={{ __html: message.text }}
-            >
-            <div className="feedback-buttons">
-              <button onClick={() => handleFeedback('like')}>👍 Like</button>
-              <button onClick={() => handleFeedback('dislike')}>👎 Dislike</button>
-            </div>
+            <div key={index} className="bot-message message">
+              <div dangerouslySetInnerHTML={{ __html: message.text }}></div>
+              <div className="feedback-buttons">
+                <button onClick={() => handleFeedback('like')}>👍 Like</button>
+                <button onClick={() => handleFeedback('dislike')}>👎 Dislike</button>
+              </div>
             </div>
           ) : (
             <p key={index} className="user-message message">
