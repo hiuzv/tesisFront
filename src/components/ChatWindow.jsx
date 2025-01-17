@@ -58,6 +58,7 @@ const ChatWindow = () => {
             </p>
           )
         ))}
+        {isLoading && <Loader />}
       </div>
       <div className="chat-footer">
         <input
