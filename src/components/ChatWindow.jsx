@@ -51,10 +51,10 @@ const ChatWindow = () => {
 
   const renderMessage = (message, index) => {
     if (message.role === 'bot') {
-      // Procesar bloques de código
+      // Dividir el contenido del mensaje en bloques de texto y código
       const codeRegex = /<pre><code>([\s\S]*?)<\/code><\/pre>/g;
       const parts = message.text.split(codeRegex);
-
+  
       return (
         <div key={index} className="bot-message message">
           {parts.map((part, i) =>
@@ -65,7 +65,7 @@ const ChatWindow = () => {
               // Renderizar bloque de código con botón de copiar
               <div key={i} className="code-block">
                 <pre><code>{part}</code></pre>
-                <button onClick={() => handleCopyCode(part)}>Copiar</button>
+                <button className="copy-button" onClick={() => handleCopyCode(part)}>Copiar</button>
               </div>
             )
           )}
@@ -79,7 +79,7 @@ const ChatWindow = () => {
         </div>
       );
     }
-
+  
     // Renderizar mensajes del usuario
     return (
       <p key={index} className="user-message message">
@@ -87,6 +87,7 @@ const ChatWindow = () => {
       </p>
     );
   };
+  
 
   const handleFeedback = (index, feedback) => {
     const updatedMessages = [...messages];
