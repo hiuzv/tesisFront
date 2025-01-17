@@ -32,7 +32,13 @@ const ChatWindow = () => {
         prompt: input,
         nombre_usuario: userName,
       });
-      const botMessage = { role: 'bot', text: response.data.response, feedbackGiven: false };
+      // Crear el mensaje del bot con el message_id incluido
+      const botMessage = {
+          role: 'bot',
+          text: response.data.response,
+          feedbackGiven: false,
+          message_id: response.data.assistant_message_id, // Aquí se incluye el message_id del backend
+      };
       setMessages([...messages, newMessage, botMessage]);
     } catch (error) {
       const errorMessage = { role: 'bot', text: 'Error en la conexión.', feedbackGiven: true };
@@ -74,7 +80,7 @@ const ChatWindow = () => {
         alert('Error al enviar el feedback');
       });
   };
-  
+
   return (
     <div className="chat-window">
       <div className="chat-header">Chat Bot Educativo</div>
