@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import Message from './Message';
 import FeedbackButtons from './FeedbackButtons';
 import Loader from './Loader';
-import Notification from './notification';
+import Notification from './Notification';
 import './Notification.css';
 import axios from 'axios';
 
