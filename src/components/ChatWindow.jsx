@@ -107,6 +107,7 @@ const ChatWindow = () => {
 
   return (
     <div className="chat-window">
+      <Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: '', type: '' })} />
       <div className="chat-header">
         <div className="header-title">Chat Bot Educativo</div>
         <div className="user-info">
@@ -120,11 +121,7 @@ const ChatWindow = () => {
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.role === 'user' ? 'user-message' : 'bot-message'}`}>
             {/* Renderizar contenido del mensaje */}
-            {message.role === 'bot' ? (
-              <div dangerouslySetInnerHTML={{ __html: message.text }}></div>
-            ) : (
-              <p>{message.text}</p>
-            )}
+            {message.role === 'bot' ? renderMessageContent(message.text) : <p>{message.text}</p>}
 
             {/* Mostrar botones de Like/Dislike solo si no se ha dado feedback y no es el mensaje de bienvenida */}
             {message.role === 'bot' && !message.feedbackGiven && index !== 0 && (
