@@ -20,11 +20,15 @@ body {
   .chat-header {
     background: #000066;
     color: white;
-    padding: 10px;
-    text-align: center;
+    padding: 15px;
     border-radius: 8px 8px 0 0;
     max-height: 800px; /* Limitar la altura del chat */
     overflow-y: auto; /* Habilitar desplazamiento vertical */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
   }
   
   .chat-log {
