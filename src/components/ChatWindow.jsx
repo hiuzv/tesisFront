@@ -66,21 +66,20 @@ const ChatWindow = () => {
 
   // Función para agregar botones de copiar dentro de los bloques de código
   const renderMessageContent = (text) => {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = text;
+    return text.split(/(<pre><code>[\s\S]*?<\/code><\/pre>)/g).map((part, index) => {
+      if (part.startsWith('<pre><code>')) {
+        // Extraer el contenido sin etiquetas
+        const codeContent = part.replace('<pre><code>', '').replace('</code></pre>', '');
 
-    tempDiv.querySelectorAll('pre code').forEach((block) => {
-      const copyButton = document.createElement('button');
-      copyButton.className = 'copy-button';
-      copyButton.innerText = '📋 Copiar';
-
-      copyButton.onclick = () => handleCopyCode(block.innerText);
-
-      // Insertar el botón antes del bloque de código
-      block.parentNode.insertBefore(copyButton, block);
+        return (
+          <div key={index} className="code-block">
+            <button className="copy-button" onClick={() => handleCopyCode(codeContent)}>📋 Copiar</button>
+            <pre><code>{codeContent}</code></pre>
+          </div>
+        );
+      }
+      return <span key={index} dangerouslySetInnerHTML={{ __html: part }} />;
     });
-
-    return tempDiv.innerHTML;
   };
 
   const handleFeedback = (index, feedback) => {
