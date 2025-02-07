@@ -5,18 +5,19 @@ import Loader from './Loader';
 import axios from 'axios';
 
 const ChatWindow = () => {
-  const [messages, setMessages] = useState([
-    { role: 'bot', text: 'Bienvenido al Chat Bot Educativo', feedbackGiven: true },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [userName, setUserName] = useState('Usuario Anónimo');
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
     // Extraer el parámetro "nombre_usuario" de la URL
     const params = new URLSearchParams(window.location.search);
     const nombreUsuario = params.get('nombre_usuario') || 'Usuario Anónimo';
-    setUserName(decodeURIComponent(nombreUsuario)); // Decodificar espacios u otros caracteres
+    const decodedName = decodeURIComponent(nombreUsuario); // Decodificar caracteres especiales
+
+    setUserName(decodedName); // Actualizar el nombre de usuario
+    setMessages([{ role: 'bot', text: `Bienvenido ${decodedName} al Chat Bot Educativo`, feedbackGiven: true }]); // Mensaje de bienvenida dinámico
   }, []);
 
   const sendMessage = async () => {
