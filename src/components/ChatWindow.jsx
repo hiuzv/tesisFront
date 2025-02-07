@@ -78,13 +78,11 @@ const ChatWindow = () => {
   const renderMessageContent = (text) => {
     return text.split(/(<pre><code>[\s\S]*?<\/code><\/pre>)/g).map((part, index) => {
       if (part.startsWith('<pre><code>')) {
-        // Extraer el contenido sin etiquetas
         const codeContent = part.replace('<pre><code>', '').replace('</code></pre>', '');
-
         return (
           <div key={index} className="code-block">
             <button className="copy-button" onClick={() => handleCopyCode(codeContent)}>📋 Copiar</button>
-            <pre><code>{codeContent}</code></pre>
+            <pre><code dangerouslySetInnerHTML={{ __html: codeContent }} /></pre>
           </div>
         );
       }
