@@ -29,6 +29,27 @@ body {
     justify-content: space-between;
     font-size: 18px;
     font-weight: bold;
+    position: relative;
+  }
+  
+  .header-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Reducir el espacio entre icono y texto */
+    font-size: 14px; /* Reducir tamaño del nombre */
+  }
+  
+  /* Estilo para el icono */
+  .user-info svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
   }
   
   .chat-log {
