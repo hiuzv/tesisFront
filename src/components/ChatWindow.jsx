@@ -2,6 +2,8 @@ import React, { useState,useEffect } from 'react';
 import Message from './Message';
 import FeedbackButtons from './FeedbackButtons';
 import Loader from './Loader';
+import Notification from './notification';
+import './Notification.css';
 import axios from 'axios';
 
 const ChatWindow = () => {
@@ -57,12 +59,18 @@ const ChatWindow = () => {
     }
   };
 
+  const showNotification = (message, type) => {
+    setNotification({ message, type });
+
+    setTimeout(() => {
+      setNotification({ message: '', type: '' });
+    }, 3000);
+  };
+
   const handleCopyCode = (code) => {
-    navigator.clipboard.writeText(code).then(() => {
-      alert('Código copiado al portapapeles');
-    }).catch(() => {
-      alert('Error al copiar el código');
-    });
+    navigator.clipboard.writeText(code)
+      .then(() => showNotification('Código copiado al portapapeles', 'success'))
+      .catch(() => showNotification('Error al copiar el código', 'error'));
   };
 
   // Función para agregar botones de copiar dentro de los bloques de código
@@ -92,12 +100,8 @@ const ChatWindow = () => {
 
     // Enviar el feedback al servidor
     axios.post('https://web-production-67b6d.up.railway.app/feedback', { feedback, message_id: messageId, })
-      .then(() => {
-        alert('Gracias por tu feedback');
-      })
-      .catch(() => {
-        alert('Error al enviar el feedback');
-      });
+    .then(() => showNotification('Gracias por tu feedback', 'success'))
+    .catch(() => showNotification('Error al enviar el feedback', 'error'));
   };
 
   return (
