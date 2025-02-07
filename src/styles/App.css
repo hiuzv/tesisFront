@@ -31,6 +31,8 @@ body {
     max-height: 800px; /* Limitar la altura */
     overflow-y: auto; /* Habilitar desplazamiento vertical */
     padding: 15px;
+    display: flex;
+    flex-direction: column;
   }
   
   .chat-footer {
@@ -63,18 +65,31 @@ body {
   }
   
   .message {
-    word-wrap: break-word; /* Evitar que las palabras largas desborden */
-    white-space: pre-wrap; /* Manejar saltos de línea correctamente */
+    word-wrap: break-word; /* Evitar desbordamiento */
+    white-space: pre-wrap; /* Manejar saltos de línea */
+    max-width: 70%; /* Limitar el ancho de los mensajes */
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+    display: flex;
+    flex-direction: column;
+    direction: ltr; /* Asegurar que el texto se lea de izquierda a derecha */
   }
   
   .user-message {
-    background: #e2eaff;
-    text-align: left;
+    align-self: flex-end; /* Mueve los mensajes del usuario a la derecha */
+    background-color: #007bff; /* Color más destacado */
+    color: white;
+    text-align: left; /* Mantener alineación del texto */
+    border-radius: 10px 10px 0 10px;
   }
   
   .bot-message {
-    background: #f4f4f4;
-    text-align: right;
+    align-self: flex-start; /* Mueve los mensajes del bot a la izquierda */
+    background-color: #f1f1f1; /* Fondo gris claro */
+    color: black;
+    text-align: left; /* Mantener alineación del texto */
+    border-radius: 10px 10px 10px 0;
   }
   
   .loader {
