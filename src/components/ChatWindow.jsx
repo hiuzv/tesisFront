@@ -64,6 +64,25 @@ const ChatWindow = () => {
     });
   };
 
+  // Función para agregar botones de copiar dentro de los bloques de código
+  const renderMessageContent = (text) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = text;
+
+    tempDiv.querySelectorAll('pre code').forEach((block) => {
+      const copyButton = document.createElement('button');
+      copyButton.className = 'copy-button';
+      copyButton.innerText = '📋 Copiar';
+
+      copyButton.onclick = () => handleCopyCode(block.innerText);
+
+      // Insertar el botón antes del bloque de código
+      block.parentNode.insertBefore(copyButton, block);
+    });
+
+    return tempDiv.innerHTML;
+  };
+
   const handleFeedback = (index, feedback) => {
     const updatedMessages = [...messages];
     updatedMessages[index].feedbackGiven = true; // Bloquear feedback para este mensaje
