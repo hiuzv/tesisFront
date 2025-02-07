@@ -61,7 +61,7 @@ body {
   }
 
   .chat-footer button:hover {
-    background-color: #333399;
+    background-color: #000066;
   }
   
   .message {
@@ -78,7 +78,7 @@ body {
   
   .user-message {
     align-self: flex-end; /* Mueve los mensajes del usuario a la derecha */
-    background-color: #007bff; /* Color más destacado */
+    background-color: #000066; /* Color más destacado */
     color: white;
     text-align: left; /* Mantener alineación del texto */
     border-radius: 10px 10px 0 10px;
@@ -126,7 +126,7 @@ body {
   }
   
   .code-block button:hover {
-    background-color: #333399;
+    background-color: #000066;
   }
 
   .copy-button {
@@ -143,7 +143,7 @@ body {
   }
   
   .copy-button:hover {
-    background-color: #333399;
+    background-color: #000066;
   }
   
   .feedback-buttons {
