@@ -11,6 +11,7 @@ const ChatWindow = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [userName, setUserName] = useState('');
+  const [notification, setNotification] = useState({ message: '', type: '' });
 
   useEffect(() => {
     // Extraer el parámetro "nombre_usuario" de la URL
